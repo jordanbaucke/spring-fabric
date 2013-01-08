@@ -14,5 +14,4 @@ public class RootConfig {
 		ppc.setLocation(new ClassPathResource("/persistence.properties"));
 		return ppc;
 	}
-	
 }

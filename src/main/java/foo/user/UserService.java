@@ -31,5 +31,4 @@ public class UserService implements UserDetailsService {
 		GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.singleton(authority));
 	}
-
 }

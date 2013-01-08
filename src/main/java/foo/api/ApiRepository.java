@@ -3,6 +3,8 @@
  */
 package foo.api;
 
+import java.util.Collection;
+
 import javax.persistence.*;
 
 import org.springframework.stereotype.Repository;
@@ -20,5 +22,13 @@ public class ApiRepository {
 	@Transactional
 	public void save(ApiMethod apimethod) {
 		entityManager.persist(apimethod);
+	}
+	
+	public Collection<ApiMethod> findAllMethods() {
+		try {
+			return entityManager.createNamedQuery(ApiMethod.FIND_ALL_METHODS, ApiMethod.class).getResultList();
+		} catch (PersistenceException e) {
+			return null;
+		}
 	}
 }
