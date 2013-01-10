@@ -4,7 +4,6 @@ import java.util.Date;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.jasypt.util.text.StrongTextEncryptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +21,7 @@ public class TokenService implements TokenUtils {
 	/*
 	 * (non-Javadoc)
 	 * @see foo.api.TokenUtils#getToken(org.springframework.security.core.userdetails.UserDetails)
+	 * Returns a token that expires in 24 hours
 	 */
 	@Override
 	public String getToken(UserDetails userDetails) {
@@ -33,18 +33,7 @@ public class TokenService implements TokenUtils {
 		return strongTextEncryptor.encrypt(gson.toJson(token));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see foo.api.TokenUtils#getToken(org.springframework.security.core.userdetails.UserDetails, java.lang.Long)
-	 */
-	@Override
-	public String getToken(UserDetails userDetails, Long expiration) {
-		String key = userDetails.getUsername();
-		StrongTextEncryptor strongTextEncryptor = new StrongTextEncryptor();
-		strongTextEncryptor.setPassword("password");
-		return strongTextEncryptor.encrypt(key);
-	}
-
+	
 	@Override
 	public boolean validate(String token) {
 		StrongTextEncryptor strongTextEncryptor = new StrongTextEncryptor();
@@ -71,4 +60,9 @@ public class TokenService implements TokenUtils {
 		return null;
 	}
 
+	@Override
+	public String getToken(UserDetails userDetails, Long expiration) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

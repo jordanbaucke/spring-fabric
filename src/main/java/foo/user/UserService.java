@@ -23,6 +23,10 @@ public class UserService implements UserDetailsService {
 		userRepository.save(new User("admin", "admin", "ROLE_ADMIN"));
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username);
