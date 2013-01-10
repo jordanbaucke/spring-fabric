@@ -15,13 +15,13 @@ public class ApiLogin {
   @RequestMapping(method = RequestMethod.POST)
   @ResponseBody
   //public LoginStatus login(@RequestParam("j_username") String username,
-  public Token login(@RequestParam("j_username") String username,
+  public TokenService login(@RequestParam("j_username") String username,
                            @RequestParam("j_password") String password) {
 	  
 	Date d = new Date();
 	String append = username+password+d.toString();
-	Token token = new Token(append);
-
+//	TokenService token = new TokenService(append);
+	TokenService token = null;
     return token;
   }
 }
