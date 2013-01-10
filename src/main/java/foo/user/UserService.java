@@ -16,6 +16,7 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	
 	@PostConstruct	
 	protected void initialize() {
 		userRepository.save(new User("user", "demo", "ROLE_USER"));

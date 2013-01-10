@@ -32,15 +32,17 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
-        @SuppressWarnings("unchecked")
-        java.util.Map<String, String[]> parms = request.getParameterMap();
-
-        if(((java.util.Map<String, String[]>) parms).containsKey("token")) {
-            String token = ((java.util.Map<String, String[]>) parms).get("token")[0]; // grab the first "token" parameter
-
+        // Get request url parameters 
+        //java.util.Map<String, String[]> parms = request.getParameterMap(); 
+        
+        //if(((java.util.Map<String, String[]>) parms).containsKey("token")) {
+        if(((HttpServletRequest) request).getHeader("token") != null){
+        	//String token = ((java.util.Map<String, String[]>) parms).get("token")[0]; // grab the first "token" parameter
+        	String token = ((HttpServletRequest) request).getHeader("token");
+        	
             // validate the token
             if (tokenUtils.validate(token)) {
-                // determine the user based on the (already validated) token
+                // determine the user based on the (already validated) to/ken
                 UserDetails userDetails = tokenUtils.getUserFromToken(token);
                 // build an Authentication object with the user's info
                 UsernamePasswordAuthenticationToken authentication = 
