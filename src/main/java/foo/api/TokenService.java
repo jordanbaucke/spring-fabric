@@ -1,18 +1,28 @@
 package foo.api;
 
+import java.util.Collections;
 import java.util.Date;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.jasypt.util.text.StrongTextEncryptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 
+import foo.user.User;
+import foo.user.UserRepository;
+
 @Service
 public class TokenService implements TokenUtils {
 	
 	Gson gson;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	public TokenService() {
 		this.gson = new Gson();
@@ -55,9 +65,21 @@ public class TokenService implements TokenUtils {
 	}
 
 	@Override
-	public UserDetails getUserFromToken(String token) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDetails getUserFromToken(String tokenString) {
+		StrongTextEncryptor strongTextEncryptor = new StrongTextEncryptor();
+		strongTextEncryptor.setPassword("password");
+		
+		// decrypt json string
+		String decryptedToken = strongTextEncryptor.decrypt(tokenString);
+		
+		// demarshal json back to pojo
+		Token token = gson.fromJson(decryptedToken, Token.class);
+		
+		User user = userRepository.findByUsername(token.username);
+		GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());	
+		UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.singleton(authority));
+		
+		return userDetails;
 	}
 
 	@Override
