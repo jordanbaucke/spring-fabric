@@ -25,15 +25,17 @@ public class Authenticate {
 	@Autowired
 	TokenService tokenService;
 
-  @RequestMapping(method = RequestMethod.POST)
-  @ResponseBody
-  public String login(@RequestParam("username") String username,
-                           @RequestParam("password") String password) {
-	
-	// lookup the user in the database	
-	User user = userRepository.findByUsername(username);
-	GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());	
-	UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.singleton(authority));
-	return tokenService.getToken(userDetails);
-  }
+	@RequestMapping(method = RequestMethod.POST)
+	@ResponseBody
+	public String login(@RequestParam("username") String username,
+			@RequestParam("password") String password) {
+
+		// lookup the user in the database
+		User user = userRepository.findByUsername(username);
+		GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
+		UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+				user.getUsername(), user.getPassword(),
+				Collections.singleton(authority));
+		return tokenService.getToken(userDetails);
+	}
 }

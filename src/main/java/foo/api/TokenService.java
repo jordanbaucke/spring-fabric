@@ -18,20 +18,22 @@ import foo.user.UserRepository;
 
 @Service
 public class TokenService implements TokenUtils {
-	
+
 	Gson gson;
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	public TokenService() {
 		this.gson = new Gson();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see foo.api.TokenUtils#getToken(org.springframework.security.core.userdetails.UserDetails)
-	 * Returns a token that expires in 24 hours
+	 * 
+	 * @see
+	 * foo.api.TokenUtils#getToken(org.springframework.security.core.userdetails
+	 * .UserDetails) Returns a token that expires in 24 hours
 	 */
 	@Override
 	public String getToken(UserDetails userDetails) {
@@ -40,24 +42,25 @@ public class TokenService implements TokenUtils {
 		Token token = new Token(userDetails.getUsername(), expiration);
 		StrongTextEncryptor strongTextEncryptor = new StrongTextEncryptor();
 		strongTextEncryptor.setPassword("password");
+
 		return strongTextEncryptor.encrypt(gson.toJson(token));
 	}
 
-	
 	@Override
 	public boolean validate(String token) {
 		StrongTextEncryptor strongTextEncryptor = new StrongTextEncryptor();
 		strongTextEncryptor.setPassword("password");
-		
+
 		// decrypt json string
 		String decryptedToken = strongTextEncryptor.decrypt(token);
-		
+
 		// demarshal json back to pojo
 		Token tokenToValidate = gson.fromJson(decryptedToken, Token.class);
-	
+
 		// simple check if token is valid
 		Date currentTime = new Date();
-		if(currentTime.before(tokenToValidate.expiration) && tokenToValidate.username != null){
+		if (currentTime.before(tokenToValidate.expiration)
+				&& tokenToValidate.username != null) {
 			return true;
 		} else {
 			return false;
@@ -65,21 +68,23 @@ public class TokenService implements TokenUtils {
 	}
 
 	@Override
-	public UserDetails getUserFromToken(String tokenString) {
+	public User getUserFromToken(String tokenString) {
 		StrongTextEncryptor strongTextEncryptor = new StrongTextEncryptor();
 		strongTextEncryptor.setPassword("password");
-		
+
 		// decrypt json string
 		String decryptedToken = strongTextEncryptor.decrypt(tokenString);
-		
+
 		// demarshal json back to pojo
 		Token token = gson.fromJson(decryptedToken, Token.class);
-		
+
 		User user = userRepository.findByUsername(token.username);
-		GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());	
-		UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.singleton(authority));
-		
-		return userDetails;
+//		GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
+//		UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+//				user.getUsername(), user.getPassword(),
+//				Collections.singleton(authority));
+
+		return user;
 	}
 
 	@Override

@@ -14,14 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @Secured("ROLE_USER")
 public class UserController {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
-	
 	@Autowired
 	private UserRepository userRepository;
 	
 	@RequestMapping(value = "user", method = RequestMethod.GET)
 	public String index(UserDetails userDetails, Model model) {
-		LOG.info(userDetails.toString());
 		return "user/index";
 	}
 	

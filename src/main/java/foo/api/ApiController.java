@@ -2,6 +2,9 @@ package foo.api;
 
 import java.util.Collection;
 
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +24,17 @@ import foo.user.UserController;
 
 @Controller
 @RequestMapping(value = "/api")
+@Secured("ROLE_USER")
 public class ApiController {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private ApiRepository apiRepository;
+	
+	@PostConstruct	
+	protected void initialize() {
+		apiRepository.save(new ApiMethod("newMethod1"));
+		apiRepository.save(new ApiMethod("newMethod2"));
+	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String index(UserDetails userDetails, Model model) {
@@ -42,11 +50,11 @@ public class ApiController {
 		return "redirect:/api";
 	}
 	
-	@Secured("ROLE_USER")
+	@Monitor
 	@RequestMapping(value = "methods.json", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public Collection<ApiMethod> jsonGetMethods() {
+	public Collection<ApiMethod> jsonGetMethods(HttpServletResponse response) {
 		return apiRepository.findAllMethods();
 	}
 }
