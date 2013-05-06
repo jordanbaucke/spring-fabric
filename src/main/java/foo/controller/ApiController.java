@@ -1,4 +1,4 @@
-package foo.api;
+package foo.controller;
 
 import java.util.Collection;
 
@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import foo.api.ApiMethod;
+import foo.api.Monitor;
+import foo.persistence.ApiRepository;
 import foo.user.User;
 import foo.user.UserController;
 

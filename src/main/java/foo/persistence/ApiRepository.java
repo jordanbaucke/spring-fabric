@@ -1,7 +1,7 @@
 /**
  * 
  */
-package foo.api;
+package foo.persistence;
 
 import java.util.Collection;
 
@@ -9,6 +9,8 @@ import javax.persistence.*;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import foo.api.ApiMethod;
 /**
  * @author jordanbaucke
  *
