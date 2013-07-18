@@ -1,4 +1,6 @@
-package foo.api;
+package foo.service;
+
+import foo.api.UsageMonitor;
 
 public interface iMonitorService {
 	public Long calculateObjectSize(Object o);

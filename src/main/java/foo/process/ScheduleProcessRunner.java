@@ -15,7 +15,6 @@ public class ScheduleProcessRunner {
 	@Transactional
 	@ServiceActivator
 	public ScheduleProcessCommandMsg process(ScheduleProcessCommandMsg commandMsg){
-		logger.debug("ScheduleProcess command message recieved: "+commandMsg.toString());
 		return commandMsg;
 	}
 }

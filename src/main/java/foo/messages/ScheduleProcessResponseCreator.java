@@ -10,6 +10,7 @@ public class ScheduleProcessResponseCreator {
 	public ScheduleProcessResponse createScheduleProcessResponse(ScheduleProcessCommandMsg commandMsg){
 		ScheduleProcessResponse response = new ScheduleProcessResponse();
 		response.setStatus("success");
+		response.setMethodName(commandMsg.getMethodName());
 		return response;
 	}
 }

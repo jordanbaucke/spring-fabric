@@ -5,7 +5,8 @@ import java.io.Serializable;
 public class ScheduleProcessResponse extends ScheduleProcessCommandMsg implements Serializable{
 
 	private String status;
-	
+	private String methodName;
+
 	/**
 	 * 
 	 */
@@ -26,5 +27,11 @@ public class ScheduleProcessResponse extends ScheduleProcessCommandMsg implement
 		this.status = status;
 	}
 	
-	
+	public String getMethodName() {
+		return methodName;
+	}
+
+	public void setMethodName(String methodName) {
+		this.methodName = methodName;
+	}
 }

@@ -1,12 +1,10 @@
-package foo.controller;
+package foo.api.endpoint;
 
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
@@ -20,10 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import foo.api.ApiMethod;
-import foo.api.Monitor;
 import foo.persistence.ApiRepository;
-import foo.user.User;
-import foo.user.UserController;
 
 @Controller
 @RequestMapping(value = "/api")
@@ -53,7 +48,6 @@ public class ApiController {
 		return "redirect:/api";
 	}
 	
-	@Monitor
 	@RequestMapping(value = "methods.json", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody

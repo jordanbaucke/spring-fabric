@@ -4,12 +4,10 @@ import java.io.IOException;
 import java.util.Collections;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,8 +28,6 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 	UserService userService;
 	@Autowired
 	TokenUtils tokenUtils;
-	@Autowired
-	MonitorService monitorService;
 	
 	private AuthenticationManager authManager;
 	private User user;
@@ -77,15 +73,8 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 						authManager.authenticate(authentication));
 			}
 		}
-
-		long startTime = System.currentTimeMillis();
-
 		// continue thru the filter chain
 		chain.doFilter(request, response);
 
-		long endTime = System.currentTimeMillis();
-		long executionTime = (endTime - startTime);
-		UsageMonitor usage = new UsageMonitor(user.getId(), request.getRemoteAddr(), ((HttpServletResponse) response).getStatus(), ((HttpServletRequest)request).getRequestURL().toString(), startTime, endTime, executionTime, "");
-		monitorService.logUsage(usage);
 	}
 }

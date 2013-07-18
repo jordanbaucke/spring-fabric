@@ -1,4 +1,4 @@
-package foo.controller;
+package foo.api.endpoint;
 
 import java.util.Collections;
 import java.util.Date;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import foo.api.TokenService;
+import foo.service.TokenService;
 import foo.user.User;
 import foo.user.UserRepository;
 

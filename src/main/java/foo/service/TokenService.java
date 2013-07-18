@@ -1,4 +1,4 @@
-package foo.api;
+package foo.service;
 
 import java.util.Collections;
 import java.util.Date;
@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 
+import foo.api.Token;
+import foo.api.TokenUtils;
 import foo.user.User;
 import foo.user.UserRepository;
 
