@@ -37,3 +37,9 @@ Should return some JSON like:
 <code>
 	{"methodName":"testingSpringIntegration","status":"success"}
 </code>
+
+***
+
+I thought this project might be a good idea for _starting a conversation_ about application fabric should be implemented in the cloud, and the idea of idea of web-based IDEs, remote application compilation and execution, as well as debugging, and resource usage.
+
+Any input please contact me.
