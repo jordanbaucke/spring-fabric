@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="3 seconds">
+	<contextName>spring-mvc-setup</contextName>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{32} -
+				%msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<jmxConfigurator />
+	<root level="WARN">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+	<logger name="foo" level="ALL" />
+	<logger name="org.springframework.integration.monitor" level="info" />
+	<logger name="org.springframework.integration" level="info" />
+
+	<!-- Insert the current time formatted as "yyyyMMdd'T'HHmmss" under the 
+		key "bySecond" into the logger context. This value will be available to all 
+		subsequent configuration elements. -->
+	<!-- <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss" /> <appender 
+		name="FILE" class="ch.qos.logback.core.FileAppender"> use the previously 
+		created timestamp to create a uniquely named log file <file>log-${bySecond}.txt</file> 
+		<encoder> <pattern>%logger{35} - %msg%n</pattern> </encoder> </appender> 
+		<root level="DEBUG"> <appender-ref ref="FILE" /> </root> -->
+</configuration>
